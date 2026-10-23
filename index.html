@@ -1,0 +1,1210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Capitalism Takes Over</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=Instrument+Serif:ital@0;1&display=swap');
+
+  :root {
+    --bg: #07090d;
+    --surface: #12161d;
+    --surface-2: #1b222c;
+    --border: rgba(148,176,210,0.12);
+    --border-hover: rgba(148,176,210,0.28);
+    --accent: #5b8cff;
+    --accent-soft: rgba(91,140,255,0.16);
+    --green: #7dcea0;
+    --red: #e07a86;
+    --text: #e8eef6;
+    --text-2: #9aa6b8;
+    --text-3: #6d7a8c;
+    --radius: 14px;
+    --radius-sm: 10px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', system-ui, sans-serif;
+    background:
+      radial-gradient(900px 420px at 10% -10%, rgba(91,140,255,0.16), transparent 55%),
+      var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  header {
+    padding: 1.1rem 1.6rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--bg);
+  }
+
+  .logo {
+    font-family: 'Instrument Serif', serif;
+    font-size: 1.5rem;
+    font-weight: 400;
+  }
+
+  .logo em { font-style: italic; color: var(--accent); }
+
+  .header-meta {
+    display: flex;
+    gap: 1.4rem;
+    font-size: 0.82rem;
+    color: var(--text-2);
+  }
+
+  .header-meta strong { color: var(--text); font-weight: 600; }
+
+  .container {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 2rem 1.25rem 3.5rem;
+  }
+
+  .screen { display: none; animation: fadeIn 0.35s ease; }
+  .screen.active { display: block; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes glow {
+    0%, 100% { box-shadow: 0 0 0 1px rgba(91,140,255,0.35); }
+    50% { box-shadow: 0 0 0 1px rgba(142,180,255,0.75), 0 12px 28px rgba(40,80,180,0.28); }
+  }
+
+  .setup-wrap { max-width: 460px; margin: 0 auto; }
+
+  .setup-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 2.1rem 1.8rem;
+  }
+
+  .setup-card h2 {
+    font-family: 'Instrument Serif', serif;
+    font-size: 1.9rem;
+    font-weight: 400;
+    margin-bottom: 0.55rem;
+  }
+
+  .setup-card .lead {
+    color: var(--text-2);
+    font-size: 0.94rem;
+    margin-bottom: 1.8rem;
+    line-height: 1.6;
+  }
+
+  label {
+    display: block;
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--text-2);
+    margin-bottom: 0.35rem;
+  }
+
+  input[type="text"], select {
+    width: 100%;
+    padding: 0.78rem 0.95rem;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--text);
+    font-size: 0.95rem;
+    font-family: inherit;
+    margin-bottom: 1rem;
+    transition: border-color 0.15s, background 0.15s;
+  }
+
+  input:focus, select:focus {
+    outline: none;
+    border-color: var(--accent);
+    background: #0e1116;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.72rem 1.3rem;
+    border: none;
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    font-size: 0.9rem;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+
+  .btn-primary { background: linear-gradient(180deg, #6d9bff, #3d6fe0); color: #f4f7ff; }
+  .btn-primary:hover { filter: brightness(1.08); transform: translateY(-1px); }
+  .btn-ghost { background: transparent; color: var(--text-2); border: 1px solid var(--border); }
+  .btn-ghost:hover { background: var(--surface-2); color: var(--text); }
+  .btn:active { transform: translateY(0); }
+  .btn:disabled { opacity: 0.35; cursor: not-allowed; transform: none; }
+
+  .btn-row { display: flex; gap: 0.6rem; }
+
+  .rules-box {
+    margin-top: 1.5rem;
+    padding: 1.1rem 1.2rem;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-size: 0.87rem;
+    color: var(--text-2);
+    animation: fadeIn 0.25s ease;
+  }
+
+  .rules-box h4 { color: var(--text); font-size: 0.82rem; font-weight: 600; margin-bottom: 0.45rem; }
+  .rules-box ul { padding-left: 1.1rem; }
+  .rules-box li { margin-bottom: 0.25rem; }
+  .hidden { display: none !important; }
+
+  .game-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.4rem;
+  }
+
+  .turn-pill {
+    background: var(--accent-soft);
+    color: var(--accent);
+    padding: 0.42rem 0.95rem;
+    border-radius: 999px;
+    font-size: 0.84rem;
+    font-weight: 600;
+  }
+
+  .players-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(195px, 1fr));
+    gap: 0.7rem;
+    margin-bottom: 1.6rem;
+  }
+
+  .player-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.05rem 1.1rem;
+    transition: all 0.2s ease;
+  }
+
+  .player-card.active {
+    border-color: var(--accent);
+    background: linear-gradient(180deg, var(--accent-soft) 0%, var(--surface) 70%);
+    box-shadow: 0 0 0 1px rgba(91,140,255,0.45);
+    animation: glow 2.4s ease-in-out infinite;
+  }
+
+  .player-name { font-weight: 600; font-size: 0.95rem; }
+  .player-class { font-size: 0.74rem; color: var(--text-3); margin: 0.15rem 0 0.65rem; }
+
+  .stat-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.84rem;
+  }
+
+  .stat-row .label { color: var(--text-2); }
+  .stat-row .value { font-weight: 600; font-variant-numeric: tabular-nums; }
+
+  .capital-bar {
+    height: 4px;
+    background: #0a0c10;
+    border-radius: 2px;
+    margin-top: 0.7rem;
+    overflow: hidden;
+  }
+
+  .capital-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #3d6fe0, #8eb4ff);
+    border-radius: 2px;
+    transition: width 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .action-panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.4rem 1.45rem;
+    margin-bottom: 1.3rem;
+  }
+
+  .action-panel h3 { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.3rem; }
+  .action-desc { color: var(--text-2); font-size: 0.84rem; margin-bottom: 1.05rem; }
+
+  .actions {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+    gap: 0.55rem;
+  }
+
+  .action-btn {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 0.9rem 0.85rem;
+    text-align: left;
+    cursor: pointer;
+    color: var(--text);
+    font-family: inherit;
+    transition: all 0.15s ease;
+  }
+
+  .action-btn:hover:not(:disabled) {
+    border-color: var(--border-hover);
+    background: var(--surface-2);
+    transform: translateY(-2px);
+  }
+
+  .action-btn:active:not(:disabled) { transform: translateY(0); }
+  .action-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+  .action-btn .title { font-weight: 600; font-size: 0.87rem; margin-bottom: 0.15rem; }
+  .action-btn .sub { font-size: 0.72rem; color: var(--text-3); line-height: 1.35; }
+
+  .log-panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.1rem 1.25rem;
+    max-height: 200px;
+    overflow-y: auto;
+  }
+
+  .log-panel h3 {
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--text-3);
+    text-transform: uppercase;
+    letter-spacing: 0.7px;
+    margin-bottom: 0.5rem;
+  }
+
+  .log-entry {
+    font-size: 0.83rem;
+    padding: 0.28rem 0;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-2);
+    animation: slideIn 0.25s ease;
+  }
+
+  .log-entry:last-child { border-bottom: none; }
+  .log-entry .who { color: var(--accent); font-weight: 600; }
+
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateX(-4px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.65);
+    backdrop-filter: blur(6px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    padding: 1rem;
+    animation: fadeIn 0.2s ease;
+  }
+
+  .modal {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.85rem 1.65rem;
+    max-width: 390px;
+    width: 100%;
+    text-align: center;
+    animation: scaleIn 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  @keyframes scaleIn {
+    from { opacity: 0; transform: scale(0.96); }
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  .modal h2 {
+    font-family: 'Instrument Serif', serif;
+    font-size: 1.55rem;
+    font-weight: 400;
+    margin-bottom: 0.45rem;
+  }
+
+  .modal p { color: var(--text-2); font-size: 0.9rem; margin-bottom: 1.1rem; line-height: 1.55; }
+
+  .modal .big-num {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--green);
+    margin: 0.15rem 0 1.15rem;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .modal .big-num.neg { color: var(--red); }
+
+  .win-screen { text-align: center; padding: 4rem 1rem 2rem; }
+
+  .win-screen h1 {
+    font-family: 'Instrument Serif', serif;
+    font-size: 2.7rem;
+    font-weight: 400;
+    margin-bottom: 0.5rem;
+  }
+
+  .win-screen .subtitle { color: var(--text-2); font-size: 1.05rem; margin-bottom: 1.8rem; }
+
+  footer {
+    text-align: center;
+    padding: 1.6rem 1rem 2rem;
+    color: var(--text-3);
+    font-size: 0.76rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .card-update { animation: cardPulse 0.35s ease; }
+  @keyframes cardPulse {
+    0% { transform: scale(1); }
+    40% { transform: scale(1.02); }
+    100% { transform: scale(1); }
+  }
+
+  .players-setup {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+    margin-bottom: 0.85rem;
+  }
+
+  .player-row {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    animation: fadeIn 0.2s ease;
+  }
+
+  .player-row input,
+  .player-name-view {
+    flex: 1;
+    min-width: 0;
+    margin-bottom: 0;
+    height: 42px;
+  }
+
+  .player-name-view {
+    display: flex;
+    align-items: center;
+    padding: 0 0.95rem;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-size: 0.95rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .icon-btn {
+    width: 42px;
+    height: 42px;
+    flex: 0 0 42px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--text-2);
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+
+  .icon-btn:hover:not(:disabled) {
+    background: var(--surface-2);
+    color: var(--text);
+    border-color: var(--border-hover);
+  }
+
+  .icon-btn.danger:hover:not(:disabled) {
+    color: var(--red);
+    border-color: rgba(242, 92, 84, 0.4);
+    background: rgba(242, 92, 84, 0.08);
+  }
+
+  .icon-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+  .icon-btn svg { width: 16px; height: 16px; }
+
+  .add-player {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo"><em>Capitalism</em> Takes Over</div>
+  <div class="header-meta" id="headerMeta" style="display:none;">
+    <div>Turn <strong id="turnNum">1</strong></div>
+    <div><strong id="playerCount">4</strong> players</div>
+  </div>
+</header>
+
+<div class="container">
+
+  <div id="setupScreen" class="screen active">
+    <div class="setup-wrap">
+      <div class="setup-card">
+        <h2>New Game</h2>
+        <p class="lead">Everyone starts poor. First person to 20 points wins.</p>
+        <div id="modePick" class="btn-row" style="margin-bottom:1rem;flex-wrap:wrap;">
+          <button type="button" class="btn btn-primary" onclick="showLocal()">This phone</button>
+          <button type="button" class="btn btn-ghost" onclick="showCreate()">Create lobby</button>
+          <button type="button" class="btn btn-ghost" onclick="showJoin()">Join lobby</button>
+        </div>
+        <div id="localBox" class="hidden">
+        <label>Players</label>
+        <div id="playerList" class="players-setup"></div>
+        <button type="button" class="btn btn-ghost add-player" id="addPlayerBtn" onclick="addPlayer()">Add player</button>
+
+        <div class="btn-row">
+          <button class="btn btn-primary" onclick="startGame()">Start Game</button>
+          <button class="btn btn-ghost" onclick="toggleRules()">Rules</button>
+        </div>
+
+        <div id="rulesBox" class="rules-box hidden">
+          <h4>How to Play</h4>
+          <ul>
+          <li>Each turn, pick one move.</li>
+          <li><strong>Work</strong> — Get 1 to 3 points. Sometimes the boss takes a cut.</li>
+          <li><strong>Invest</strong> — Pay 2. You might get 4 to 6 back.</li>
+          <li><strong>Strike</strong> — Try to raise pay for every worker.</li>
+          <li><strong>Gamble</strong> — Big win or lose 2.</li>
+          <li><strong>Hustle</strong> — Extra job. Often +2. Sometimes +5 or nothing.</li>
+          <li><strong>Steal</strong> — Try to take 2 from the richest player.</li>
+          <li>First to 20 points wins.</li>
+          </ul>
+        </div>
+        </div>
+
+        <div id="createBox" class="hidden">
+          <label>Your name</label>
+          <input id="hostName" type="text" maxlength="24" value="Player 1">
+          <button type="button" class="btn btn-primary" onclick="createLobby()">Create</button>
+          <div id="codeBox" class="hidden" style="margin-top:1rem;">
+            <p class="lead" style="margin-bottom:0.4rem;">Room code</p>
+            <p id="roomCode" style="font-size:2rem;letter-spacing:0.2em;color:var(--accent);font-weight:700;"></p>
+            <p class="lead">Tell friends this code. They open this same page and tap Join lobby.</p>
+            <div id="lobbyList" class="players-setup"></div>
+            <button type="button" class="btn btn-primary" id="hostStart" onclick="startOnline()" disabled>Start game</button>
+          </div>
+          <p id="hostStatus" class="lead"></p>
+        </div>
+
+        <div id="joinBox" class="hidden">
+          <label>Room code</label>
+          <input id="joinCode" type="text" maxlength="4" placeholder="AB12" style="text-transform:uppercase;">
+          <label>Your name</label>
+          <input id="joinName" type="text" maxlength="24" value="Player 2">
+          <button type="button" class="btn btn-primary" onclick="joinLobby()">Join</button>
+          <p id="joinStatus" class="lead"></p>
+          <div id="guestList" class="players-setup"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="gameScreen" class="screen">
+    <div class="game-top">
+      <div class="turn-pill">Turn: <span id="currentPlayerName">Player 1</span></div>
+      <button class="btn btn-ghost" onclick="endGameEarly()" style="font-size:0.78rem;padding:0.35rem 0.7rem;">Quit</button>
+    </div>
+
+    <div class="players-grid" id="playersGrid"></div>
+
+    <div class="action-panel">
+      <h3>Your turn</h3>
+      <p class="action-desc" id="actionDesc">Pick a move.</p>
+      <div class="actions">
+        <button class="action-btn" onclick="press('work')">
+          <div class="title">Work</div>
+          <div class="sub">Get 1 to 3. Boss might take a cut.</div>
+        </button>
+        <button class="action-btn" onclick="press('invest')">
+          <div class="title">Invest</div>
+          <div class="sub">Pay 2. Maybe get 4 to 6 back.</div>
+        </button>
+        <button class="action-btn" onclick="press('organize')">
+          <div class="title">Strike</div>
+          <div class="sub">Try to raise pay for everyone.</div>
+        </button>
+        <button class="action-btn" onclick="press('speculate')">
+          <div class="title">Gamble</div>
+          <div class="sub">Big win or lose 2.</div>
+        </button>
+        <button class="action-btn" onclick="press('hustle')">
+          <div class="title">Hustle</div>
+          <div class="sub">Extra job. Often +2.</div>
+        </button>
+        <button class="action-btn" onclick="press('redistribute')">
+          <div class="title">Steal</div>
+          <div class="sub">Try to take 2 from the bourgeoisie.</div>
+        </button>
+      </div>
+    </div>
+
+    <div class="log-panel">
+      <h3>Game Log</h3>
+      <div id="gameLog"></div>
+    </div>
+  </div>
+
+  <div id="winScreen" class="screen">
+    <div class="win-screen">
+      <h1 id="winnerTitle">Capitalism Takes Over</h1>
+      <p class="subtitle" id="winnerSub"></p>
+      <p style="max-width:400px;margin:0 auto 1.8rem;color:var(--text-2);font-size:0.94rem;">
+        You now control the means of production.
+      </p>
+      <button class="btn btn-primary" onclick="location.reload()">Play Again</button>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  Made By Noah I.
+</footer>
+
+<div id="modal" class="modal-overlay hidden">
+  <div class="modal">
+    <h2 id="modalTitle">Event</h2>
+    <p id="modalText"></p>
+    <div id="modalNum" class="big-num"></div>
+    <button class="btn btn-primary" onclick="closeModal()">Continue</button>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/peerjs@1.5.4/dist/peerjs.min.js"></script>
+<script>
+  let players = [];
+  let currentIndex = 0;
+  let turn = 1;
+  let wageBonus = 0;
+  let gameOver = false;
+
+  const CLASS_NAMES = {
+    low: "Poor",
+    mid: "Middle",
+    high: "Rich"
+  };
+
+  const MIN_PLAYERS = 2;
+  const MAX_PLAYERS = 6;
+  let nextPlayerId = 1;
+  let setupPlayers = [];
+  let online = false;
+  let isHost = false;
+  let meId = null;
+  let peer = null;
+  let hostConn = null;
+  let conns = [];
+  let lobby = [];
+  let started = false;
+  let logLines = [];
+
+  function showOnly(id) {
+    ['localBox', 'createBox', 'joinBox'].forEach((box) => {
+      document.getElementById(box).classList.toggle('hidden', box !== id);
+    });
+  }
+  function showLocal() { showOnly('localBox'); }
+  function showCreate() { showOnly('createBox'); }
+  function showJoin() { showOnly('joinBox'); }
+
+  function roomId(code) { return 'cap-' + code.toLowerCase(); }
+  function makeCode() {
+    const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+    let s = '';
+    for (let i = 0; i < 4; i++) s += chars[Math.floor(Math.random() * chars.length)];
+    return s;
+  }
+
+  function sendAll(msg) {
+    conns.forEach((c) => { try { c.send(msg); } catch (e) {} });
+  }
+  function sendHost(msg) {
+    if (hostConn) { try { hostConn.send(msg); } catch (e) {} }
+  }
+  function getState() {
+    return {
+      players, currentIndex, turn, wageBonus, gameOver, logLines,
+      screen: gameOver ? 'win' : 'game',
+      winnerTitle: document.getElementById('winnerTitle').textContent,
+      winnerSub: document.getElementById('winnerSub').textContent,
+      modal: window.currentModal || null
+    };
+  }
+  function broadcast() {
+    if (online && isHost) sendAll({ kind: 'state', state: getState() });
+  }
+  function myTurn() {
+    if (!online) return true;
+    const p = players[currentIndex];
+    return !!(p && p.pid === meId);
+  }
+  function renderLobby(list, target) {
+    const el = document.getElementById(target);
+    if (!el) return;
+    el.innerHTML = list.map((p) => `<div class="player-name-view">${escapeHtml(p.name)}</div>`).join('');
+  }
+
+  function createLobby() {
+    const name = document.getElementById('hostName').value.trim() || 'Player 1';
+    const code = makeCode();
+    document.getElementById('hostStatus').textContent = 'Starting room...';
+    peer = new Peer(roomId(code));
+    peer.on('open', () => {
+      online = true;
+      isHost = true;
+      meId = 'p1';
+      lobby = [{ pid: 'p1', name }];
+      document.getElementById('roomCode').textContent = code;
+      document.getElementById('codeBox').classList.remove('hidden');
+      document.getElementById('hostStatus').textContent = 'Waiting for friends.';
+      renderLobby(lobby, 'lobbyList');
+    });
+    peer.on('connection', (conn) => {
+      conns.push(conn);
+      conn.on('data', (msg) => onHostMessage(conn, msg));
+      conn.on('close', () => {
+        conns = conns.filter((c) => c !== conn);
+        if (!started && conn.pid) {
+          lobby = lobby.filter((p) => p.pid !== conn.pid);
+          renderLobby(lobby, 'lobbyList');
+          document.getElementById('hostStart').disabled = lobby.length < 2;
+          sendAll({ kind: 'lobby', lobby });
+        }
+      });
+    });
+    peer.on('error', () => {
+      document.getElementById('hostStatus').textContent = 'Could not start the room. Check your internet and try again.';
+    });
+  }
+
+  function onHostMessage(conn, msg) {
+    if (msg.kind === 'join') {
+      if (started || lobby.length >= MAX_PLAYERS) {
+        conn.send({ kind: 'reject', text: started ? 'Game already started.' : 'Room is full.' });
+        return;
+      }
+      const pid = 'p' + (lobby.length + 1);
+      const name = String(msg.name || 'Player').trim().slice(0, 24) || 'Player';
+      conn.pid = pid;
+      lobby.push({ pid, name });
+      conn.send({ kind: 'joined', pid });
+      renderLobby(lobby, 'lobbyList');
+      document.getElementById('hostStart').disabled = lobby.length < 2;
+      sendAll({ kind: 'lobby', lobby });
+      return;
+    }
+    if (msg.kind === 'act') {
+      if (!started || !myTurnCheck(conn.pid)) return;
+      doAction(msg.type);
+      broadcast();
+    }
+    if (msg.kind === 'continue') {
+      if (!window.currentModal) return;
+      closeModal(true);
+    }
+  }
+  function myTurnCheck(pid) {
+    const p = players[currentIndex];
+    return p && p.pid === pid;
+  }
+
+  function joinLobby() {
+    const code = document.getElementById('joinCode').value.trim().toUpperCase();
+    const name = document.getElementById('joinName').value.trim() || 'Player';
+    if (code.length < 4) {
+      document.getElementById('joinStatus').textContent = 'Type the 4 letter code.';
+      return;
+    }
+    document.getElementById('joinStatus').textContent = 'Joining...';
+    peer = new Peer();
+    peer.on('open', () => {
+      hostConn = peer.connect(roomId(code), { reliable: true });
+      hostConn.on('open', () => hostConn.send({ kind: 'join', name }));
+      hostConn.on('data', onGuestMessage);
+      hostConn.on('error', () => {
+        document.getElementById('joinStatus').textContent = 'Could not join. Check the code.';
+      });
+    });
+    peer.on('error', () => {
+      document.getElementById('joinStatus').textContent = 'Could not connect. Check your internet.';
+    });
+    setTimeout(() => {
+      if (!meId) document.getElementById('joinStatus').textContent = 'No room with that code. Try again.';
+    }, 8000);
+  }
+
+  function onGuestMessage(msg) {
+    if (msg.kind === 'reject') {
+      document.getElementById('joinStatus').textContent = msg.text;
+      return;
+    }
+    if (msg.kind === 'joined') {
+      online = true;
+      isHost = false;
+      meId = msg.pid;
+      document.getElementById('joinStatus').textContent = 'You are in. Wait for the host to start.';
+    }
+    if (msg.kind === 'lobby') {
+      renderLobby(msg.lobby, 'guestList');
+    }
+    if (msg.kind === 'state') applyState(msg.state);
+  }
+
+  function applyState(s) {
+    players = s.players;
+    currentIndex = s.currentIndex;
+    turn = s.turn;
+    wageBonus = s.wageBonus;
+    gameOver = s.gameOver;
+    logLines = s.logLines || [];
+    document.getElementById('setupScreen').classList.remove('active');
+    document.getElementById('gameScreen').classList.toggle('active', s.screen === 'game' && !s.gameOver);
+    document.getElementById('winScreen').classList.toggle('active', !!s.gameOver);
+    document.getElementById('headerMeta').style.display = 'flex';
+    if (s.gameOver) {
+      document.getElementById('winnerTitle').textContent = s.winnerTitle;
+      document.getElementById('winnerSub').textContent = s.winnerSub;
+    }
+    const logEl = document.getElementById('gameLog');
+    logEl.innerHTML = '';
+    logLines.forEach((line) => {
+      const entry = document.createElement('div');
+      entry.className = 'log-entry';
+      entry.innerHTML = line;
+      logEl.appendChild(entry);
+    });
+    window.currentModal = s.modal;
+    if (s.modal) {
+      document.getElementById('modalTitle').textContent = s.modal.title;
+      document.getElementById('modalText').textContent = s.modal.text;
+      const numEl = document.getElementById('modalNum');
+      if (s.modal.num === null || s.modal.num === 0) {
+        numEl.textContent = '';
+      } else {
+        numEl.textContent = (s.modal.num > 0 ? '+' : '') + s.modal.num;
+        numEl.className = 'big-num' + (s.modal.neg || s.modal.num < 0 ? ' neg' : '');
+      }
+      document.getElementById('modal').classList.remove('hidden');
+    } else {
+      document.getElementById('modal').classList.add('hidden');
+    }
+    if (!s.gameOver) render();
+  }
+
+  function startOnline() {
+    if (lobby.length < 2) return;
+    started = true;
+    players = lobby.map((p) => ({ name: p.name, capital: 1, class: 'low', pid: p.pid }));
+    currentIndex = 0;
+    turn = 1;
+    wageBonus = 0;
+    gameOver = false;
+    logLines = [];
+    document.getElementById('setupScreen').classList.remove('active');
+    document.getElementById('gameScreen').classList.add('active');
+    document.getElementById('headerMeta').style.display = 'flex';
+    document.getElementById('playerCount').textContent = players.length;
+    log('Game started. Everyone starts with 1 point.');
+    render();
+    broadcast();
+  }
+
+  function press(type) {
+    if (!myTurn()) return;
+    if (online && !isHost) {
+      sendHost({ kind: 'act', type });
+      return;
+    }
+    doAction(type);
+    broadcast();
+  }
+
+  const PENCIL = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>';
+  const CHECK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>';
+  const TRASH = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/></svg>';
+
+  function defaultSetup() {
+    setupPlayers = [];
+    for (let i = 0; i < 4; i++) {
+      setupPlayers.push({ id: nextPlayerId++, name: `Player ${i + 1}`, editing: false });
+    }
+  }
+
+  function syncSetupNames() {
+    document.querySelectorAll('.player-row input').forEach((input) => {
+      const id = Number(input.dataset.id);
+      const p = setupPlayers.find((x) => x.id === id);
+      if (p) p.name = input.value;
+    });
+  }
+
+  function renderSetup() {
+    const list = document.getElementById('playerList');
+    const canRemove = setupPlayers.length > MIN_PLAYERS;
+    list.innerHTML = '';
+    setupPlayers.forEach((p) => {
+      const row = document.createElement('div');
+      row.className = 'player-row';
+      const nameHtml = p.editing
+        ? `<input type="text" data-id="${p.id}" value="${escapeAttr(p.name)}" placeholder="Name" maxlength="24">`
+        : `<div class="player-name-view">${escapeHtml(p.name.trim() || 'Unnamed')}</div>`;
+      row.innerHTML = `
+        ${nameHtml}
+        <button type="button" class="icon-btn" title="${p.editing ? 'Done' : 'Edit name'}" aria-label="${p.editing ? 'Done editing name' : 'Edit player name'}" onclick="toggleEdit(${p.id})">${p.editing ? CHECK : PENCIL}</button>
+        <button type="button" class="icon-btn danger" title="Remove player" aria-label="Remove player" onclick="removePlayer(${p.id})" ${canRemove ? '' : 'disabled'}>${TRASH}</button>
+      `;
+      list.appendChild(row);
+      const input = row.querySelector('input');
+      if (input) {
+        input.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            toggleEdit(p.id);
+          }
+        });
+      }
+    });
+    const addBtn = document.getElementById('addPlayerBtn');
+    addBtn.disabled = setupPlayers.length >= MAX_PLAYERS;
+    addBtn.textContent = setupPlayers.length >= MAX_PLAYERS ? 'Max 6 players' : 'Add player';
+    if (setupPlayers.some((p) => p.editing)) {
+      const input = list.querySelector('input');
+      if (input && document.activeElement !== input) {
+        input.focus();
+        input.select();
+      }
+    }
+  }
+
+  function escapeHtml(s) {
+    return s.replace(/[&<>"']/g, (c) => ({
+      '&': '&',
+      '<': '<',
+      '>': '>',
+      '"': '"',
+      "'": '&#39;'
+    }[c]));
+  }
+
+  function escapeAttr(s) {
+    return escapeHtml(s);
+  }
+
+  function addPlayer() {
+    syncSetupNames();
+    if (setupPlayers.length >= MAX_PLAYERS) return;
+    setupPlayers.forEach((p) => { p.editing = false; });
+    const n = setupPlayers.length + 1;
+    setupPlayers.push({ id: nextPlayerId++, name: `Player ${n}`, editing: true });
+    renderSetup();
+  }
+
+  function removePlayer(id) {
+    syncSetupNames();
+    if (setupPlayers.length <= MIN_PLAYERS) return;
+    setupPlayers = setupPlayers.filter((p) => p.id !== id);
+    renderSetup();
+  }
+
+  function toggleEdit(id) {
+    syncSetupNames();
+    const p = setupPlayers.find((x) => x.id === id);
+    if (!p) return;
+    const opening = !p.editing;
+    setupPlayers.forEach((x) => { x.editing = false; });
+    p.editing = opening;
+    if (!p.name.trim()) p.name = 'Player';
+    renderSetup();
+  }
+
+  defaultSetup();
+  renderSetup();
+
+  function toggleRules() {
+    document.getElementById('rulesBox').classList.toggle('hidden');
+  }
+
+  function startGame() {
+    syncSetupNames();
+    setupPlayers.forEach((p) => { p.editing = false; });
+    if (setupPlayers.length < MIN_PLAYERS) return;
+    players = setupPlayers.map((p, i) => ({
+      name: p.name.trim() || `Player ${i + 1}`,
+      capital: 1,
+      class: 'low'
+    }));
+    currentIndex = 0;
+    turn = 1;
+    wageBonus = 0;
+    gameOver = false;
+
+    document.getElementById('setupScreen').classList.remove('active');
+    document.getElementById('gameScreen').classList.add('active');
+    document.getElementById('headerMeta').style.display = 'flex';
+    document.getElementById('playerCount').textContent = players.length;
+
+    log('Game started. Everyone starts with 1 point.');
+    render();
+  }
+
+  function render() {
+    if (gameOver) return;
+
+    document.getElementById('turnNum').textContent = turn;
+    document.getElementById('currentPlayerName').textContent = players[currentIndex].name;
+
+    const grid = document.getElementById('playersGrid');
+    grid.innerHTML = '';
+    players.forEach((p, i) => {
+      const card = document.createElement('div');
+      card.className = 'player-card' + (i === currentIndex ? ' active' : '');
+      const pct = Math.min(100, (p.capital / 20) * 100);
+      card.innerHTML = `
+        <div class="player-name">${p.name}</div>
+        <div class="player-class">${CLASS_NAMES[p.class]}</div>
+        <div class="stat-row"><span class="label">Capital</span><span class="value">${p.capital} / 20</span></div>
+        <div class="capital-bar"><div class="capital-fill" style="width:${pct}%"></div></div>
+      `;
+      grid.appendChild(card);
+    });
+
+    document.querySelectorAll('.action-btn').forEach((btn, i) => {
+      if (!myTurn()) btn.disabled = true;
+      else if (i === 1) btn.disabled = players[currentIndex].capital < 2;
+      else btn.disabled = false;
+    });
+    const desc = document.getElementById('actionDesc');
+    if (desc) desc.textContent = myTurn() ? 'Pick a move.' : 'Waiting for ' + players[currentIndex].name + '.';
+  }
+
+  function log(msg) {
+    logLines.unshift(msg);
+    const logEl = document.getElementById('gameLog');
+    const entry = document.createElement('div');
+    entry.className = 'log-entry';
+    entry.innerHTML = msg;
+    logEl.prepend(entry);
+  }
+
+  function doAction(type) {
+    if (gameOver) return;
+    const p = players[currentIndex];
+
+    const cards = document.querySelectorAll('.player-card');
+    if (cards[currentIndex]) cards[currentIndex].classList.add('card-update');
+
+    if (type === 'work') {
+      let earn = Math.floor(Math.random() * 3) + 1 + wageBonus;
+      if (Math.random() < 0.28) {
+        earn = Math.max(0, earn - 1);
+        p.capital += earn;
+        showModal("Exploitation", `${p.name} worked hard, but the owners of the means of production took the surplus value.`, earn, true);
+        log(`<span class="who">${p.name}</span> faced exploitation. Gained only ${earn}.`);
+      } else {
+        p.capital += earn;
+        showModal("Labor", `${p.name} sold their labor and earned capital.`, earn);
+        log(`<span class="who">${p.name}</span> worked and earned ${earn} capital.`);
+      }
+    }
+
+    else if (type === 'invest') {
+      if (p.capital < 2) return;
+      p.capital -= 2;
+      if (Math.random() < 0.58) {
+        const ret = Math.floor(Math.random() * 3) + 4;
+        p.capital += ret;
+        showModal("Investment", `${p.name} invested in the means of production and reaped the returns.`, ret);
+        log(`<span class="who">${p.name}</span> invested 2 and gained ${ret}.`);
+      } else {
+        showModal("Bad Investment", `${p.name}'s capital vanished into a failed venture.`, -2, true);
+        log(`<span class="who">${p.name}</span> invested and lost 2 capital.`);
+      }
+    }
+
+    else if (type === 'organize') {
+      if (Math.random() < 0.62) {
+        wageBonus = Math.min(2, wageBonus + 1);
+        showModal("Solidarity", `The strike worked. Through collective action, all workers now earn +${wageBonus} extra when they Work.`, 0);
+        log(`<span class="who">${p.name}</span> organized a successful strike. Wage bonus +${wageBonus}.`);
+      } else {
+        p.capital = Math.max(0, p.capital - 1);
+        showModal("Strike Broken", `The owners crushed the strike. ${p.name} lost 1 capital.`, -1, true);
+        log(`<span class="who">${p.name}</span>'s strike failed.`);
+      }
+    }
+
+    else if (type === 'hustle') {
+      const roll = Math.random();
+      if (roll < 0.22) {
+        p.capital += 5;
+        showModal("Big Gig", `${p.name} caught a lucky gig-economy shift and banked 5 capital.`, 5);
+        log(`<span class="who">${p.name}</span> landed a huge side gig. +5!`);
+      } else if (roll < 0.7) {
+        p.capital += 2;
+        showModal("Side Hustle", `${p.name} picked up extra work and earned 2 capital.`, 2);
+        log(`<span class="who">${p.name}</span> hustled for 2 capital.`);
+      } else {
+        showModal("Gig Cancelled", `${p.name} waited around and got paid nothing.`, 0, true);
+        log(`<span class="who">${p.name}</span> had the gig cancelled.`);
+      }
+    }
+
+    else if (type === 'redistribute') {
+      let richest = players[0];
+      players.forEach((o) => { if (o.capital > richest.capital) richest = o; });
+      if (richest === p || richest.capital < 2) {
+        showModal("No Target", `${p.name} is already on top. Nobody to take from.`, 0);
+        log(`<span class="who">${p.name}</span> found nobody richer to challenge.`);
+      } else if (Math.random() < 0.55) {
+        const take = Math.min(2, richest.capital);
+        richest.capital -= take;
+        p.capital += take;
+        updateClass(richest);
+        showModal("Redistributed", `Collective pressure moved ${take} capital from ${richest.name} to ${p.name}.`, take);
+        log(`<span class="who">${p.name}</span> took ${take} from ${richest.name}.`);
+      } else {
+        p.capital = Math.max(0, p.capital - 1);
+        showModal("Pushed Back", `The owners shut it down. ${p.name} lost 1 capital.`, -1, true);
+        log(`<span class="who">${p.name}</span> got pushed back and lost 1.`);
+      }
+    }
+
+    else if (type === 'speculate') {
+      const roll = Math.random();
+      if (roll < 0.32) {
+        const gain = Math.floor(Math.random() * 5) + 4;
+        p.capital += gain;
+        showModal("Market Boom", `${p.name} gambled and hit it big.`, gain);
+        log(`<span class="who">${p.name}</span> speculated and gained ${gain}!`);
+      } else if (roll < 0.62) {
+        const gain = Math.floor(Math.random() * 2) + 1;
+        p.capital += gain;
+        showModal("Small Gain", `${p.name} made a modest profit.`, gain);
+        log(`<span class="who">${p.name}</span> speculated and gained ${gain}.`);
+      } else {
+        p.capital = Math.max(0, p.capital - 2);
+        showModal("Market Crash", `${p.name} lost capital in a risky bet.`, -2, true);
+        log(`<span class="who">${p.name}</span> Tried and lost 2.`);
+      }
+    }
+
+    updateClass(p);
+    checkWin(p);
+  }
+
+  function updateClass(p) {
+    if (p.capital >= 15) p.class = 'high';
+    else if (p.capital >= 8) p.class = 'mid';
+    else p.class = 'low';
+  }
+
+  function checkWin(p) {
+    if (p.capital >= 20) {
+      gameOver = true;
+      document.getElementById('winnerTitle').textContent = `${p.name} Wins`;
+      document.getElementById('winnerSub').textContent = `${p.name} got to 20 points and wins.`;
+      setTimeout(() => {
+        document.getElementById('gameScreen').classList.remove('active');
+        document.getElementById('winScreen').classList.add('active');
+        document.getElementById('winnerTitle').textContent = `${p.name} Wins`;
+        document.getElementById('winnerSub').textContent = `${p.name} got to 20 points and wins.`;
+      }, 700);
+    }
+  }
+
+  function nextTurn() {
+    if (gameOver) return;
+    currentIndex = (currentIndex + 1) % players.length;
+    if (currentIndex === 0) {
+      turn++;
+      if (Math.random() < 0.4) {
+        triggerMarketEvent();
+        return;
+      }
+    }
+    render();
+  }
+
+  function triggerMarketEvent() {
+    const events = [
+      { title: "Economic Boom", text: "Demand is high. Everyone gains 1 capital.", effect: () => players.forEach(p => { p.capital += 1; updateClass(p); }) },
+      { title: "Recession", text: "A recession hits. Everyone loses 1 capital.", effect: () => players.forEach(p => { p.capital = Math.max(0, p.capital - 1); updateClass(p); }) },
+      { title: "New Regulation", text: "Workers gain protection. Wage bonus +1 (max 2).", effect: () => { wageBonus = Math.min(2, wageBonus + 1); } },
+      { title: "Automation", text: "Tech disrupts labor. Players with under 5 capital lose 1.", effect: () => players.forEach(p => { if (p.capital < 5) p.capital = Math.max(0, p.capital - 1); updateClass(p); }) },
+      { title: "Union Strength", text: "Solidarity grows. The next successful strike will be stronger.", effect: () => {} },
+      { title: "Windfall", text: "The player with the least capital finds 2 capital.", effect: () => { const low = Math.min(...players.map(p => p.capital)); const who = players.find(p => p.capital === low); if (who) { who.capital += 2; updateClass(who); } } },
+      { title: "Luxury Tax", text: "The richest player pays 2 capital.", effect: () => { const high = Math.max(...players.map(p => p.capital)); const who = players.find(p => p.capital === high); if (who) { who.capital = Math.max(0, who.capital - 2); updateClass(who); } } }
+    ];
+    const ev = events[Math.floor(Math.random() * events.length)];
+    ev.effect();
+    showModal(ev.title, ev.text, null);
+    log(`Market Event: <strong>${ev.title}</strong>`);
+  }
+
+  let modalCallback = null;
+
+  function showModal(title, text, num, isNeg = false) {
+    document.getElementById('modalTitle').textContent = title;
+    document.getElementById('modalText').textContent = text;
+    const numEl = document.getElementById('modalNum');
+    if (num === null || num === 0) {
+      numEl.textContent = '';
+      numEl.className = 'big-num';
+    } else {
+      numEl.textContent = (num > 0 ? '+' : '') + num;
+      numEl.className = 'big-num' + (isNeg || num < 0 ? ' neg' : '');
+    }
+    document.getElementById('modal').classList.remove('hidden');
+    window.currentModal = { title, text, num, neg: !!isNeg };
+    modalCallback = () => { if (!gameOver) nextTurn(); };
+  }
+
+  function closeModal(fromNet) {
+    if (online && !isHost && !fromNet) {
+      sendHost({ kind: 'continue' });
+      return;
+    }
+    document.getElementById('modal').classList.add('hidden');
+    window.currentModal = null;
+    if (modalCallback) { modalCallback(); modalCallback = null; }
+    render();
+    if (online && isHost) broadcast();
+  }
+
+  function endGameEarly() {
+    if (confirm("Quit and return to setup?")) location.reload();
+  }
+</script>
+</body>
+</html>
